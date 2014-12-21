@@ -140,7 +140,7 @@ function drawLineChart( elementId, data ) {
                   } ),
       
       circleContainer;
-    svg.empty();
+      
   // Compute the minimum and maximum date, and the maximum price.
   x.domain( [ data[ 0 ].date, data[ data.length - 1 ].date ] );
   // hacky hacky hacky :(

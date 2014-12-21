@@ -15,6 +15,25 @@ function getSessionId() {
     return response.responseJSON.sessionId;
 }
 
+var uporabniki = [
+	{
+		value: "",
+		name: ""
+	},
+	{
+		value: "254f791d-2e7c-49d9-b646-376f62d6ead5",
+		name: "Dejan Lavbič"
+	},
+	{
+		value: "d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd",
+		name: "Pujsa Pepa"
+	},
+	{
+		value: "b931580f-2b05-488b-985b-8d9ffb08ad025",
+		name: "Ata Smrk"
+	}
+	];
+
 
 function kreirajEHRzaBolnika() {
 	sessionId = getSessionId();
@@ -50,6 +69,10 @@ function kreirajEHRzaBolnika() {
 		                    $("#kreirajSporocilo").html("<span class='obvestilo label label-success fade-in'>Uspešno kreiran EHR '" + ehrId + "'.</span>");
 		                    console.log("Uspešno kreiran EHR '" + ehrId + "'.");
 		                    $("#preberiEHRid").val(ehrId);
+		                    
+		                    var user = {value: ehrId,	name: ime + " " +  priimek};
+		                    uporabniki.push(user);
+		                    DodajUporabnika(user);
 		                }
 		            },
 		            error: function(err) {
@@ -216,7 +239,6 @@ function preberiMeritveVitalnihZnakov() {
 	}
 }
 
-
 $(document).ready(function() {
 	$('#preberiObstojeciEHR').change(function() {
 		$("#preberiSporocilo").html("");
@@ -247,4 +269,34 @@ $(document).ready(function() {
 		$("#rezultatMeritveVitalnihZnakov").html("");
 		$("#meritveVitalnihZnakovEHRid").val($(this).val());
 	});
+	
+	for(var i = 0; i < uporabniki.length; i++) {
+	    var opt = uporabniki[i];
+	    DodajUporabnika(opt);
+	}
 });
+
+
+function DodajUporabnika(opt)
+{
+	var select1 = document.getElementById("preberiObstojeciEHR"); 
+	var select2 = document.getElementById("preberiEhrIdZaVitalneZnake");
+	var select3 = document.getElementById("preberiObstojeciVitalniZnak");
+	
+	var el = document.createElement("option");
+    el.textContent = opt.name;
+    el.value = opt.value;
+    select1.appendChild(el);
+    
+    el = document.createElement("option");
+    el.textContent = opt.name;
+    el.value = opt.value;
+    select1.appendChild(el);
+    select2.appendChild(el);
+    
+    el = document.createElement("option");
+    el.textContent = opt.name;
+    el.value = opt.value;
+    select1.appendChild(el);
+    select3.appendChild(el);
+}
